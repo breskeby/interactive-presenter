@@ -13,10 +13,11 @@ phonecatControllers.controller('PhoneListCtrl', ['$scope', 'Phone',
 phonecatControllers.controller('SnippetDetailController', ['$scope', 'Snippet', 'MyService',
   function($scope, Snippet, MyService) {
     $scope.snippet = Snippet.get({phoneId: $scope.snippetId}, function(snippet) {
-		$scope.customers = MyService.getCustomers();
+		
     });
 
 	$scope.run = function() {
+		$scope.customers = MyService.getCustomers($scope.snippetId);
 		$scope.snippet.content = ""
 		$scope.snippet.content = "build executed"
 	}

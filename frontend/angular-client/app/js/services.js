@@ -30,14 +30,15 @@ angular.module('MyApp', []).factory('MyService', ['$q', '$rootScope', function($
     // Create a unique callback ID to map requests to responses
     var currentCallbackId = 0;
     // Create our websocket object with the address to the websocket
-    var ws = new WebSocket("ws://localhost:8000/socket/");
+    var ws = new WebSocket("ws://localhost:8080/websocket/");
 
     ws.onopen = function(){  
         console.log("Socket has been opened!");  
     };
-
+	
     ws.onmessage = function(message) {
-        listener(JSON.parse(message.data));
+        console.log("onMessage " + message.data)
+		listener(JSON.parse(message.data));
     };
 
     function sendRequest(request) {
@@ -55,7 +56,7 @@ angular.module('MyApp', []).factory('MyService', ['$q', '$rootScope', function($
 
     function listener(data) {
       var messageObj = data;
-      console.log("Received data from websocket: ", messageObj);
+      console.log("Received data from websocket: " + messageObj.data);
       // If an object exists with callback_id in our callbacks object, resolve it
       if(callbacks.hasOwnProperty(messageObj.callback_id)) {
         console.log(callbacks[messageObj.callback_id]);
@@ -73,12 +74,14 @@ angular.module('MyApp', []).factory('MyService', ['$q', '$rootScope', function($
     }
 
     // Define a "getter" for getting customer data
-    Service.getCustomers = function() {
+    Service.getCustomers = function(snippetId) {
       var request = {
-        type: "get_customers"
+        type: "startBuild",
+		snippetId: snippetId
       }
       // Storing in a variable for clarity on what sendRequest returns
       var promise = sendRequest(request); 
+	  
       return promise;
     }
 

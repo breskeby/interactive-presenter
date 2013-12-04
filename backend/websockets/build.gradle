@@ -1,0 +1,20 @@
+apply plugin:'groovy'
+apply plugin:'idea'
+
+repositories {
+    mavenCentral()
+	maven{
+		url = "http://dev.nightlabs.org/maven-repository/repo"
+	}
+    maven{
+        url = "http://repo.gradle.org/gradle/libs-releases-local"
+    }
+}
+
+dependencies {
+    compile "org.gradle:gradle-tooling-api:1.10-rc-1"
+    compile 'org.slf4j:slf4j-api:1.7.5'
+	compile 'io.netty:netty-all:5.0.0.Alpha1-SNAPSHOT'
+	compile 'org.codehaus.groovy:groovy-all:2.1.9'
+    testCompile 'junit:junit:4.11'
+}
