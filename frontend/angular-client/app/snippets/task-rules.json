@@ -1,0 +1,4 @@
+{
+    "name": "Task Rules",
+    "content":"tasks.addRule(\"Pattern: ping<ID>\") { String taskName -> \n    if (taskName.startsWith(\"ping\")) {\n        task(taskName) {\n            doLast {\n                println \"Pinging: \" + (taskName - 'ping')\n          }\n        }\n    }\n}"
+}

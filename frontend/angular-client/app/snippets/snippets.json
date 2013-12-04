@@ -1,0 +1,23 @@
+[
+    {
+        "age": 10, 
+        "id": "task-rules", 
+        "imageUrl": "img/phones/samsung-transform.0.jpg", 
+        "name": "Task Rules", 
+        "snippet": "Create tasks on demand, usually by naming patterns. Also used to provide dynamic upload, build and clean tasks."
+    }, 
+    {
+        "age": 1, 
+        "id": "dependency-resolution-strategies", 
+        "imageUrl": "img/phones/samsung-transform.0.jpg", 
+        "name": "Dependency Resolution Strategies", 
+        "snippet": "Create tasks on demand, usually by naming patterns. Also used to provide dynamic upload, build and clean tasks."
+    },
+    {
+        "age": 17, 
+        "id": "changing-dependencies", 
+        "imageUrl": "img/phones/samsung-transform.0.jpg", 
+        "name": "Changing Dependencies", 
+        "snippet": "Changing dependencies are mutable. Version numbers ending in -SNAPSHOT are changing by default. Default TTL is 24 hours."
+    }
+]

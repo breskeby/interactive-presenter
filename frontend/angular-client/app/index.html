@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="en" ng-app="phonecatApp">
+<head>
+  <meta charset="utf-8">
+  <title>Gradle Snippets Gallery</title>
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" media="all" href="css/theme/css/default.css">
+  <script src="lib/jquery/jquery-1.10.2.js"></script>
+  <script src="lib/angular/angular.js"></script>
+  <script src="lib/angular/angular-animate.js"></script>
+  <script src="lib/angular/angular-resource.js"></script>
+  <script src="lib/angular/angular-route.js"></script>
+
+  <script src="js/app.js"></script>
+  <script src="js/animations.js"></script>
+  <script src="js/controllers.js"></script>
+  <script src="js/filters.js"></script>
+  <script src="js/services.js"></script>
+  <script data-main="js/slidedeck/slides" src="js/slidedeck/require-1.0.8.min.js"></script>
+
+</head>
+<body>
+ <!-- <div class="view-container">
+    <div ng-view class="view-frame">
+	 -->
+	 <div>
+	    <div>
+		<slides class="layout-widescreen">
+		  <slide class="logoslide nobackground">
+		    <article class="flexbox vcenter">
+		      <span><img src="img/gradle.png"></span>
+		    </article>
+		  </slide>
+
+		  <slide class="title-slide segue nobackground">
+			<aside class="note">
+		      <section>
+		        <ul>
+					<li>I think we should get started
+					<li>Welcome to the last session before pizza
+					<li>my name is rene, working for gradleware and I’ll talk about about leveraging existing tools using gradle
+					     <ul>
+							<li>we'll talk about some integration patterns & best practices for integrating thirdparty tools
+					     <li>prepared some demos
+					     <li>hopefully we have some time left at the end for Q&A
+					          <li>if you have questions, ask them
+					          <li>if you want to make a remark, do it
+					          <li>if you disagree, raise your voice.</li></ul>
+		        		</ul></ul>
+		      </section>
+		    </aside>
+		    <aside class="gdbar"><img src="img/logo_transparent.gif"></aside>
+		    <hgroup class="auto-fadein">
+		      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+		      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+		      <p data-config-presenter><!-- populated from slide_config.json --></p>
+		    </hgroup>
+		  </slide>
+
+
+		<slide class="punchline">
+			<aside class="note">
+		      <section>
+		        <ul><li>what do I mean by "existing tools" and why should we care about integrate them in our Gradle build, or more general in our software automation pipeline</li>
+				<li>different types of tools (obvisously):</li>
+				<li>peter talked about polyglot programming</li> 
+				<li>different compiler / interpreter of any type (objectivec, python, javascript)</li>
+				<li>use gradle because of it's awesome dependency management</li>
+				<li>anekdote of c shop using gradle for dep managment only (atm)</li>
+				<li>custom ci related tools, vcs, vagrant, artifact manager, other server side tools, provisioning tools like puppet or chef</li>
+				<li>last but not least there is always (well not always but most likely), there is legacy (self written/maintained) tools, bash scripts, etc.</li>
+				<li>as mentioned one motivation for integrating those tools wihtin</li> gradle is to benefit of a particular gradle feature</li>
+				<li>like outstanding dependency management</li>
+				<li>wrap external tools and use gradles up-to-date feature</li>
+				<li>In general it's not about wrapping different tools with different gradle scripts</li></ul>
+		      </section>
+		    </aside>
+		<!--TODO style better -->
+		    <article class="flexbox vcenter">
+				<ul class="build">
+					<h1>existing tools?</h1>
+					<h1>why leveraging?</h1>
+				</ul>
+		    </article>
+		  </slide>
+
+		<slide class="title-slide nobackground" 	
+			style="background-image: url(img/clockwork.jpg)">
+			<aside class="note">
+		      <section>
+		        <ul>
+					<li>goal should be a well integrated software automation pipeline; we talked about the benefits of that in other sessions (and can discuss this later on too)</li><li>so let's us focus on the integration part.</li>
+				</ul>
+			 </section>
+			</aside>
+		</slide>
+
+		<slide>
+		    <aside class="note">
+		      <section>
+		        <ul>
+				<li>Integrating with others is in its DNA and IMHO one major reason for gradles success</li>
+				<li>Some examples to prove that claim<li>
+				<li>first class ant support</li>
+				<li>interacting with Maven & Ivy</li>
+				<li>out of the box plugins for ide & quality reports (e.g. jacoco)</li>
+				<li>gradle authors can't anticipate all use cases & tools for integration</li>
+				<li>support for the unknown</li>
+				</ul>
+			 </section>
+			</aside>
+			<hgroup>
+		      <h2>Gradle is a build integration tool</h2>
+		    </hgroup>
+		    <article>
+		      <p>Integrating with others is in its DNA.</p>
+		      <ul class="build">
+		        <li>first class ant support</li>
+		        <li>interacting with Maven & Ivy</li>
+		        <li>out of the box plugins for 
+					<ul>
+			            <li>IDEs</li>
+			            <li>JaCoCo</li>
+			        </ul>
+				</li>
+				<li>support for tackling the <i>unknown</i></li>
+		      </ul>
+		    </article>
+		  </slide>
+
+		<slide class="punchline">
+		    <article class="flexbox vcenter">
+				<h3>Integration Patterns</h3>
+		    </article>
+		  </slide>
+
+
+		<!--
+		GRADLE PLUGINS
+		-->
+		  <slide>
+			<hgroup>
+		      <h2>#1 Gradle Plugin available</h2>
+		    </hgroup>
+			<aside class="note">
+		      <section>
+		        <ul>
+		          <li>use (h) for highlighting code</li>
+		        </ul>
+		      </section>
+		    </aside>    
+			<article>
+		      <br/><br/><!--fixme-->
+		      <pre class="prettyprint" data-lang="build.gradle">
+		  buildscript {
+		      repositories {
+		          jcenter()
+		      }
+		      dependencies {
+		          classpath 'org.gradle.api.plugins:gradle-tomcat-plugin:0.9.8'
+		      }
+		  }
+		  <b>apply plugin: 'tomcat'</b>
+		</pre>
+		    </article>
+		  </slide>
+
+		<slide class="punchline">
+		    <article class="flexbox vcenter">
+				<h2>Demo</h2>
+		    </article>
+		  </slide>
+
+		<slide>
+		    <hgroup>
+		      <h2>#1 Gradle Plugin available</h2>
+		      <h3>Pros & Cons</h3>
+		    </hgroup>
+			<aside class="note">
+		      <section>
+		        <ul>
+		          <li>automatically test against multiple gradle version</li>
+		          <li>central place for lookup</li>
+		          <li>voting</li>
+		        </ul>
+		      </section>
+		    </aside>
+		    <article>
+		      <ul class="build">
+				<li>somebody might already tackled the work</li>
+				<li>easy to reuse</li>        
+				<li>tested by the community</li>
+		      </ul>
+		      <ul class="build">
+				<li>might not fit your specific needs</li>
+				<li>you have to deal with its limitations</li>        
+				<li>lack of documentation</li>        
+		      </ul>
+		    </article>
+		  </slide>
+
+		<slide>
+		    <hgroup>
+		      <h2>The Gradle Plugin portal ... (sorry.)</h2>
+		    </hgroup>
+		    <article>
+		      <iframe data-src="http://wiki.gradle.org/display/GRADLE/Plugins"></iframe>
+		    </article>
+		  </slide>
+
+		<slide >
+			<article class="flexbox vcenter">
+		      <img src="img/bintray-gradle-plugins.png" alt="Description" title="Description">
+		</article> 
+		</slide>
+
+		<slide ng-init="snippetId='task-rules';">
+			<hgroup>
+		      <h2 ng-click="archive()">Task Rules</h2> <!-- should be {{snippet.name}} -->
+		    </hgroup>
+			<aside class="note">
+		      <section>
+		        <ul>
+		          <li>use (h) for highlighting code</li>
+		        </ul>
+		      </section>
+		    </aside>    
+			<article class="flexbox vcenter" >
+			<!--fixme-->
+		      <pre class="prettyprint" data-lang="build.gradle" ng-controller="SnippetDetailController" ng-click="run()">
+{{snippet.content}}
+			</pre>
+			
+		<img src="img/ant_lifting.gif" class="reflect" alt="Description" title="Description">
+
+		    </article>
+		  </slide>
+
+		<slide>
+			<hgroup>
+		      <h2>#2 Reuse ANT tasks</h2>
+		    </hgroup>
+			<aside class="note">
+		      <section>
+		        <ul>
+		          <li>use (h) for highlighting code</li>
+		        </ul>
+		      </section>
+		    </aside>    
+			<article>
+		      <br/><br/><!--fixme-->
+		      <pre class="prettyprint" data-lang="build.gradle">
+		task ajCompile{
+		  doLast{
+		    ant.taskdef(resource:"org/aspectj/tools/ant/taskdefs/aspectjTaskdefs.properties", 
+		 			 	classpath: <b>configurations.ajc.asPath</b>)    
+		    ant.iajc(source:sourceCompatibility, target:targetCompatibility, 
+						destDir:sourceSets.main.classesDir.absolutePath
+						aspectPath:<b>configurations.aspects.asPath</b>, 
+						inpath:<b>configurations.ajInpath.asPath</b>, 
+						classpath:<b>configurations.compile.asPath</b>){ 
+
+		        sourceroots{
+		            sourceSets.main.java.srcDirs.each{
+		                pathelement(location:it.absolutePath)
+		            }       
+		        }
+		    }		
+		}
+		</pre>
+		    </article>
+		  </slide>
+
+		<slide>
+		    <hgroup>
+		      <h2>#2 Reuse ANT tasks</h2>
+		      <h3>Pros & Cons</h3>
+		    </hgroup>
+			<aside class="note">
+		      <section>
+		        <ul>
+		          <li>internal ant tasks shipped with the gradle distribution.</li>
+		        </ul>
+		        <p><b>Remember to say this tag line!</b></p>
+		      </section>
+		    </aside>
+		    <article>
+		      <ul class="build">
+				<li>first class citizen in Gradle</li>
+				<li>thousands of ant (internal and 3party) tasks ready to be used</li>        
+				<li>tested by the community</li>
+				<li>usually well documented</li>
+				<li>migrating from ant is a no brainer</li>
+		      </ul>
+		      <ul class="build">
+				<li>no incremental task support out of the box</li>
+		      </ul>
+		    </article>
+		  </slide>
+
+		<slide>
+		    <hgroup>
+		      <h2>#2 Reuse ANT tasks</h2>
+		      <h3>recommendations</h3>
+		    </hgroup>
+			<aside class="note">
+		      <section>
+		        <ul>
+		          <li>model different.</li>
+		        </ul>
+		        <p><b>Remember to say this tag line!</b></p>
+		      </section>
+		    </aside>
+		    <article>
+		      <ul class="build">
+				<li>wrap ant task in a dedicated gradle task implementation</li>
+				<li>model the inputs and outputs of the ant task</li>        
+				<li>1 to 1 mapping does not always makes sense</li>        
+		      </ul>
+		    </article>
+		  </slide>
+
+		<!--
+		java library is available
+		-->
+
+		<slide>
+			<hgroup>
+		      <h2>#3 Java driver available</h2>
+		    </hgroup>
+			<aside class="note">
+		      <section>
+		        <ul>
+		          <li>use (h) for highlighting code</li>
+		        </ul>
+		      </section>
+		    </aside>    
+			<article class="flexbox vcenter">
+		<img src="img/duke_saw.png" class="reflect" alt="Description" title="Description">
+		    </article>
+		  </slide>
+
+
+		<slide class="punchline">
+		    <article class="flexbox vcenter">
+				<h2>Demo</h2>
+		    </article>
+		  </slide>
+
+		<slide>
+		    <hgroup>
+		      <h2>#3 Java driver available</h2>
+		      <h3>Pros & Cons</h3>
+		    </hgroup>
+			<aside class="note">
+		      <section>
+		        <ul>
+		          <li>often high quality</li>
+		          <li>very flexible</li>
+		          <li>look for convenient groovy layer on top</li>
+		        </ul>
+		        <p><b>Remember to say this tag line!</b></p>
+		      </section>
+		    </aside>
+		    <article>
+		      <ul class="build">
+		        <li>offers best flexibility and integration</li>
+		        <li>usually high quality</li>
+		        <li>look for convenient groovy layer on top!</li>
+				<li>just grab from maven central (or jcenter)</li>
+				<li>modelling tasks and plugins is up to you</li>
+		      </ul>
+		    </article>
+		  </slide>
+
+		<!--
+		command line tool
+		- not platform independent
+		- installation is up to you
+		- flexible
+		-->
+		<slide>
+		    <hgroup>
+		      <h2>#4 Command line interface available</h2>
+		    </hgroup>
+		    <aside class="note">
+		      <section>
+		        <ul>
+		          <li></li>
+		        </ul>
+		      </section>
+		    </aside>    
+			<article class="flexbox vcenter">
+		<img src="img/bash.jpg" class="reflect" alt="Description" title="Description">
+		    </article>
+		  </slide>
+
+		<slide>
+		    <hgroup>
+		      <h2>#4 Command line interface available</h2>
+		    </hgroup>
+		    <aside class="note">
+		      <section>
+		        <ul>
+		          <li></li>
+		        </ul>
+		      </section>
+		    </aside>    
+			<article>
+		      <br/><br/>
+		      <pre class="prettyprint" data-lang="build.gradle">
+		def stdout = new ByteArrayOutputStream()
+		exec{
+		    commandLine "whoami"
+		    standardOutput = stdout
+		}
+		println "Output:\n$stdout"
+		</pre>
+		    </article>
+		  </slide>
+
+
+		<slide class="punchline">
+		    <article class="flexbox vcenter">
+				<h2>Demo</h2>
+		    </article>
+		  </slide>
+
+		<slide>
+		    <hgroup>
+		      <h2>#4 Command line interface available</h2>
+		      <h3>Pros & Cons</h3>
+		    </hgroup>
+			<aside class="note">
+		      <section>
+		        <ul>
+		          <li>internal ant tasks shipped with the gradle distribution.</li>
+		        </ul>
+		        <p><b>Remember to say this tag line!</b></p>
+		      </section>
+		    </aside>
+		    <article>
+		      <ul class="build">
+				<li>best choice integrating (non jvm) languages and native tools</li>
+				<li>low implementation effort</li>
+				<li>inexhaustibly set of commandline - tools out there</li>
+		      </ul>
+		      <ul class="build">
+				<li>platform specific</li>        
+				<li>(manual) installation</li>
+				<li>incremental support must be modelled by you</li>
+		      </ul>
+		    </article>
+		  </slide>
+
+		  <slide class="thank-you-slide" style="background-image: url(img/gradleware.png)">
+			<article class="thank-you-title">
+				<h2>Thanks for listening!</h2>
+		    </article>
+			<p class="auto-fadein" data-config-contact>
+		      <!-- populated from slide_config.json -->
+		    </p>
+		  </slide>
+
+		  <slide class="logoslide dark nobackground">
+		    <article class="flexbox vcenter">
+		      <span><img src="img/gradle.png"></span>
+		    </article>
+		  </slide>
+
+		  <slide class="backdrop"></slide>
+
+		</slides>
+
+		<script>
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-XXXXXXXX-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+		  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+		</script>
+
+		<!--[if IE]>
+		  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+		  <script>CFInstall.check({mode: 'overlay'});</script>
+		<![endif]-->    	
+
+    </div>
+  </div>
+</body>
+</html>

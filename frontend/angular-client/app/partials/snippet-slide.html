@@ -1,0 +1,33 @@
+
+<div class="phone-images">
+  <img ng-src="{{img}}"
+       class="phone"
+       ng-repeat="img in phone.images"
+       ng-class="{active: mainImageUrl==img}">
+
+	<slides class="layout-widescreen">
+		<slide class="title-slide nobackground" 	
+			style="background-image: url(images/clockwork.jpg)">
+			<aside class="note">
+	      		<section>
+	        		<ul>
+						<li>goal should be a well integrated software automation pipeline; we talked about the benefits of that in other sessions (and can discuss this later on too)</li><li>so let's us focus on the integration part.</li>
+					</ul>
+		 		</section>
+			</aside>
+		</slide>
+	</slides>
+	
+</div>
+
+<h1>{{phone.name}}</h1>
+
+<p>{{phone.description}}</p>
+
+
+<ul class="phone-thumbs">
+  <li ng-repeat="img in phone.images">
+    <img ng-src="{{img}}" ng-click="setImage(img)">
+  </li>
+</ul>
+
