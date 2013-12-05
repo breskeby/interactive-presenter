@@ -21,6 +21,7 @@ phonecatControllers.controller('SnippetDetailController', ['$scope', 'Snippet', 
 			console.log("callyaback");
 			console.log(data.gevent.event.output)
 			$scope.snippet.content = data.gevent.event.output;
+			$scope.$apply();
 	    });
 		$scope.snippet.content = "huhu";
 	}
