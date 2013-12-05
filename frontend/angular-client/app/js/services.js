@@ -27,6 +27,7 @@ angular.module('MyApp', []).factory('MyService', ['$q', '$rootScope', function($
     var Service = {};
     // Keep all pending requests here until they get responses
     var callbacks = {};
+	var myCallbacks = {};
     // Create a unique callback ID to map requests to responses
     var currentCallbackId = 0;
     // Create our websocket object with the address to the websocket
@@ -41,13 +42,14 @@ angular.module('MyApp', []).factory('MyService', ['$q', '$rootScope', function($
 		listener(JSON.parse(message.data));
     };
 
-    function sendRequest(request) {
+    function sendRequest(request, snippetCallback) {
       var defer = $q.defer();
       var callbackId = getCallbackId();
       callbacks[callbackId] = {
         time: new Date(),
         cb:defer
       };
+      myCallbacks[callbackId] = snippetCallback;
       request.callback_id = callbackId;
       console.log('Sending request', request);
       ws.send(JSON.stringify(request));
@@ -56,7 +58,8 @@ angular.module('MyApp', []).factory('MyService', ['$q', '$rootScope', function($
 
     function listener(data) {
       var messageObj = data;
-      console.log("Received data from websocket: " + messageObj.data);
+      console.log("Received data from websocket: " + messageObj.gevent.callback_id);
+	  myCallbacks[messageObj.gevent.callback_id](messageObj);
       // If an object exists with callback_id in our callbacks object, resolve it
       if(callbacks.hasOwnProperty(messageObj.callback_id)) {
         console.log(callbacks[messageObj.callback_id]);
@@ -74,14 +77,13 @@ angular.module('MyApp', []).factory('MyService', ['$q', '$rootScope', function($
     }
 
     // Define a "getter" for getting customer data
-    Service.getCustomers = function(snippetId) {
+    Service.getCustomers = function(snippetId, snippetCallback) {
       var request = {
         type: "startBuild",
 		snippetId: snippetId
       }
       // Storing in a variable for clarity on what sendRequest returns
-      var promise = sendRequest(request); 
-	  
+      var promise = sendRequest(request, snippetCallback); 
       return promise;
     }
 

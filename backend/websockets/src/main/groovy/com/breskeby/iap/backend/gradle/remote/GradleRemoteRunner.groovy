@@ -13,8 +13,8 @@ class GradleRemoteRunner {
     }
 
 
-    GradleRemoteRun prepare(String snippetID) {
-        GradleRemoteRun run = new GradleRemoteRun(snippetID)
+    GradleRemoteRun prepare(String snippetID, int sessionId) {
+        GradleRemoteRun run = new GradleRemoteRun(snippetID, sessionId)
         run.registerOutputChannel(channel);
         run
     }

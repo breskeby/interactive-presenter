@@ -8,9 +8,10 @@ package com.breskeby.iap.backend.gradle
  * To change this template use File | Settings | File Templates.
  */
 class JsonOutputFormatter {
-    static String format(String unformatted){
+    static String format(int sessionId, String unformatted){
         def builder = new groovy.json.JsonBuilder()
         def root = builder.gevent {
+            callback_id sessionId
             event {
                 output unformatted
             }

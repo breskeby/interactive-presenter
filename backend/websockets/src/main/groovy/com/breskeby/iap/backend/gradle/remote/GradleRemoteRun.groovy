@@ -21,9 +21,11 @@ class GradleRemoteRun {
 
     private ProjectWorkspace workspace
     MessageChannel outputChannel
+    private int sessionId
 
-    GradleRemoteRun(String snippetId) {
+    GradleRemoteRun(String snippetId, int sessionId) {
         //To change body of created methods use File | Settings | File Templates.
+        this.sessionId = sessionId
         this.snippetId = snippetId
         File workspaceDirectory = new File("workspaces/$snippetId");
         workspaceDirectory.mkdirs()
@@ -53,7 +55,7 @@ class GradleRemoteRun {
 
             // Run the build
             launcher.run();
-            outputChannel.write(JsonOutputFormatter.format(new String(stream.toByteArray())));
+            outputChannel.write(JsonOutputFormatter.format(sessionId, new String(stream.toByteArray())));
         } finally {
             // Clean up
             connection.close();

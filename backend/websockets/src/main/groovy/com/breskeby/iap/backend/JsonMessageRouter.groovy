@@ -11,7 +11,7 @@ public class JsonMessageRouter implements MessageRouter {
 
         if(jsonRequest.type == "startBuild"){
             GradleRemoteRunner remoteRunner = new GradleRemoteRunner(messageChannel)
-            remoteRunner.prepare(jsonRequest.snippetId).run("tasks");
+            remoteRunner.prepare(jsonRequest.snippetId, jsonRequest.callback_id).run("tasks");
         }
     }
 

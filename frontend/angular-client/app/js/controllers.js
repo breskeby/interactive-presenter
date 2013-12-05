@@ -17,9 +17,12 @@ phonecatControllers.controller('SnippetDetailController', ['$scope', 'Snippet', 
     });
 
 	$scope.run = function() {
-		$scope.customers = MyService.getCustomers($scope.snippetId);
-		$scope.snippet.content = ""
-		$scope.snippet.content = "build executed"
+		$scope.customers = MyService.getCustomers($scope.snippetId, function(data) {
+			console.log("callyaback");
+			console.log(data.gevent.event.output)
+			$scope.snippet.content = data.gevent.event.output;
+	    });
+		$scope.snippet.content = "huhu";
 	}
   }]);
 
