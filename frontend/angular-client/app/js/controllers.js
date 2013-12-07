@@ -23,7 +23,6 @@ phonecatControllers.controller('SnippetDetailController', ['$scope', 'Snippet', 
 			$scope.snippet.content = data.gevent.event.output;
 			$scope.$apply();
 	    });
-		$scope.snippet.content = "huhu";
 	}
   }]);
 

@@ -8,10 +8,13 @@ public class JsonMessageRouter implements MessageRouter {
     @Override
     public void route(MessageChannel messageChannel, String request) {
         def jsonRequest = slurper.parseText(request)
-
         if(jsonRequest.type == "startBuild"){
             GradleRemoteRunner remoteRunner = new GradleRemoteRunner(messageChannel)
-            remoteRunner.prepare(jsonRequest.snippetId, jsonRequest.callback_id).run("tasks");
+            def preparedRun = remoteRunner.prepare(jsonRequest.snippetId, jsonRequest.callback_id)
+            List<String> tasks = jsonRequest.tasks;
+            def taskArray = tasks.toArray(new String[tasks.size()])
+            preparedRun.run(taskArray)
+        }else{
         }
     }
 

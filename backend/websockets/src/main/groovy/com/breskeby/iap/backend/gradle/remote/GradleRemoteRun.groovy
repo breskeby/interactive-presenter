@@ -3,11 +3,13 @@ package com.breskeby.iap.backend.gradle.remote
 import com.breskeby.iap.backend.MessageChannel
 import com.breskeby.iap.backend.gradle.JsonOutputFormatter
 import com.breskeby.iap.backend.gradle.ProjectWorkspace
+import org.gradle.tooling.BuildException
 import org.gradle.tooling.BuildLauncher
 import org.gradle.tooling.GradleConnector
 import org.gradle.tooling.ProgressEvent
 import org.gradle.tooling.ProgressListener
 import org.gradle.tooling.ProjectConnection
+import sun.launcher.resources.launcher
 
 /**
  * Created with IntelliJ IDEA.
@@ -34,30 +36,25 @@ class GradleRemoteRun {
 
     void run(String... tasks){
 
-        //1. setup workspace
-
-        //2. run
-
-
         // Configure the connector and create the connection
         GradleConnector connector = GradleConnector.newConnector();
         connector.forProjectDirectory(workspace.projectDirectory);
 
         ProjectConnection connection = connector.connect();
+        OutputStream stream = new ByteArrayOutputStream()
         try {
             // Configure the build
             BuildLauncher launcher = connection.newBuild();
+            launcher.forTasks()
             launcher.forTasks(tasks);
-            OutputStream stream = new ByteArrayOutputStream()
 
             launcher.setStandardOutput(stream)
             launcher.setStandardError(stream);
 
             // Run the build
             launcher.run();
-            outputChannel.write(JsonOutputFormatter.format(sessionId, new String(stream.toByteArray())));
         } finally {
-            // Clean up
+            outputChannel.write(JsonOutputFormatter.format(sessionId, new String(stream.toByteArray())));
             connection.close();
         }
     }
