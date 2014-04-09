@@ -77,11 +77,11 @@ angular.module('MyApp', []).factory('MyService', ['$q', '$rootScope', function($
     }
 
     // Define a "getter" for getting customer data
-    Service.startBuild = function(snippetId, snippetCallback) {
+    Service.startBuild = function(snippetId, taskNames, snippetCallback) {
       var request = {
         type: "startBuild",
 		snippetId: snippetId,
-		tasks:['tasks'] //TODO must no be hardcoded but passed from the model
+		tasks:[taskNames] //TODO must no be hardcoded but passed from the model
       }
       // Storing in a variable for clarity on what sendRequest returns
       var promise = sendRequest(request, snippetCallback); 

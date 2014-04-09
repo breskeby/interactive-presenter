@@ -25,7 +25,8 @@ snippetControllers.controller('SnippetDetailController', ['$scope', 'Snippet', '
 	  };
 	
 	$scope.run = function() {
-			$scope.customers = MyService.startBuild($scope.snippetId, function(data) {
+			console.log($scope.snippet.commandLine)
+			$scope.customers = MyService.startBuild($scope.snippetId, $scope.snippet.commandLine, function(data) {
 				console.log("callyaback");
 				console.log(data.gevent.event.output)
 				$scope.snippet.content = data.gevent.event.output;

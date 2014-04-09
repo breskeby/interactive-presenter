@@ -224,14 +224,12 @@
 		    </hgroup>
 			<aside class="note">
 		      <section>
-		        <ul>
-		          <li>use (h) for highlighting code</li>
-		        </ul>
+		        <b>&gt;</b><input type="text" ng-model="snippet.commandLine">  
 		      </section>
 		    </aside>    
 			<article class="flexbox vcenter" >
 			<!--fixme-->
-		      <pre ng-bind="snippet.content" class="prettyprint" data-lang="build.gradle" ng-click="run()" style="overflow-y: scroll;">
+		      <pre ng-bind="snippet.content" class="prettyprint" data-lang="build.gradle" ng-click="run('tasks')" style="overflow-y: scroll;">
 			{{snippet.content}}
 			</pre>
 			
@@ -392,6 +390,13 @@
 		      <section>
 		        <ul>
 		          <li></li>
+		        </ul>
+		      </section>
+		    </aside>
+			<aside class="note">
+		      <section>
+		        <ul>
+		          <li>&gt;</li>
 		        </ul>
 		      </section>
 		    </aside>    
