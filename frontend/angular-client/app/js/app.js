@@ -7,7 +7,7 @@ var phonecatApp = angular.module('phonecatApp', [
   'phonecatAnimations',
   'snippetControllers',
   'phonecatFilters',
-  'phonecatServices',
+  'snippetServices',
   'MyApp'
 ]);
 

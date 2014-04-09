@@ -216,9 +216,11 @@
 		</article> 
 		</slide>
 
-		<slide ng-init="snippetId='task-rules';">
+<!-- ="snippetId='task-rules';" -->
+
+		<slide ng-controller="SnippetDetailController" ng-init="init('task-rules')">
 			<hgroup>
-		      <h2 ng-click="archive()">Task Rules</h2> <!-- should be {{snippet.name}} -->
+		      <h2 ng-click="reset()">Task Rules</h2> <!-- should be {{snippet.name}} -->
 		    </hgroup>
 			<aside class="note">
 		      <section>
@@ -229,14 +231,15 @@
 		    </aside>    
 			<article class="flexbox vcenter" >
 			<!--fixme-->
-		      <pre class="prettyprint" data-lang="build.gradle" ng-controller="SnippetDetailController" ng-click="run()">
-{{snippet.content}}
+		      <pre ng-bind="snippet.content" class="prettyprint" data-lang="build.gradle" ng-click="run()" style="overflow-y: scroll;">
+			{{snippet.content}}
 			</pre>
 			
 		<img src="img/ant_lifting.gif" class="reflect" alt="Description" title="Description">
 
 		    </article>
 		  </slide>
+		
 
 		<slide>
 			<hgroup>

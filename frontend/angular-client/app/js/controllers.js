@@ -2,37 +2,45 @@
 
 /* Controllers */
 
-var phonecatControllers = angular.module('snippetControllers', ['MyApp']);
+var snippetControllers = angular.module('snippetControllers', ['MyApp']);
 
-phonecatControllers.controller('PhoneListCtrl', ['$scope', 'Phone',
+snippetControllers.controller('PhoneListCtrl', ['$scope', 'Phone',
   function($scope, Phone) {
     $scope.snippets = Phone.query();
     $scope.orderProp = 'age';
   }]);
 
-phonecatControllers.controller('SnippetDetailController', ['$scope', 'Snippet', 'MyService',
+snippetControllers.controller('SnippetDetailController', ['$scope', 'Snippet', 'MyService',
   function($scope, Snippet, MyService) {
-    $scope.snippet = Snippet.get({phoneId: $scope.snippetId}, function(snippet) {
-		
-    });
-
+	 $scope.init = function(snippetId) {
+	    //This function is sort of private constructor for controller
+	    console.log(snippetId)
+		$scope.snippetId = snippetId
+	    //Based on passed argument you can make a call to resource
+	    //and initialize more objects
+	    //$resource.getMeBond(007)
+		console.log("init method SnippetDetailControler " + snippetId)
+		$scope.snippet = Snippet.get({phoneId: snippetId}, function(snippet) {
+		});
+	  };
+	
 	$scope.run = function() {
-		$scope.customers = MyService.getCustomers($scope.snippetId, function(data) {
-			console.log("callyaback");
-			console.log(data.gevent.event.output)
-			$scope.snippet.content = data.gevent.event.output;
-			$scope.$apply();
-	    });
-	}
+			$scope.customers = MyService.startBuild($scope.snippetId, function(data) {
+				console.log("callyaback");
+				console.log(data.gevent.event.output)
+				$scope.snippet.content = data.gevent.event.output;
+				$scope.$apply(function(){
+					console.log("run completed")
+				});
+		    });
+		}
+
+	$scope.reset = function() {
+			$scope.snippet = Snippet.get({phoneId: $scope.snippetId}, function(snippet) {
+				console.log("content: " + $scope.snippet.content)
+				console.log("reset completed")
+		    });
+		}
   }]);
 
-phonecatControllers.controller('PhoneDetailCtrl', ['$scope', '$routeParams', 'Phone',
-  function($scope, $routeParams, Phone) {
-    $scope.phone = Phone.get({phoneId: $routeParams.phoneId}, function(phone) {
-      $scope.mainImageUrl = phone.images[0];
-    });
-
-    $scope.setImage = function(imageUrl) {
-      $scope.mainImageUrl = imageUrl;
-    }
-  }]);
+  

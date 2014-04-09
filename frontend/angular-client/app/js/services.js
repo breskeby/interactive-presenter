@@ -2,9 +2,9 @@
 
 /* Services */
 
-var phonecatServices = angular.module('phonecatServices', ['ngResource']);
+var snippetServices = angular.module('snippetServices', ['ngResource']);
 
-phonecatServices.factory('Phone', ['$resource',
+snippetServices.factory('Phone', ['$resource',
   function($resource){
     return $resource('snippets/:phoneId.json', {}, {
       query: {method:'GET', params:{phoneId:'snippets'}, isArray:true}
@@ -13,7 +13,7 @@ phonecatServices.factory('Phone', ['$resource',
 
 var snippetServices = angular.module('snippetServices', ['ngResource']);
 
-phonecatServices.factory('Snippet', ['$resource',
+snippetServices.factory('Snippet', ['$resource',
   function($resource){
     return $resource('snippets/:phoneId.json', {}, {
       query: {method:'GET', params:{phoneId:'snippets'}, isArray:true}
@@ -77,11 +77,11 @@ angular.module('MyApp', []).factory('MyService', ['$q', '$rootScope', function($
     }
 
     // Define a "getter" for getting customer data
-    Service.getCustomers = function(snippetId, snippetCallback) {
+    Service.startBuild = function(snippetId, snippetCallback) {
       var request = {
         type: "startBuild",
 		snippetId: snippetId,
-		tasks:['clean', 'build'] //TODO must no be hardcoded but passed from the model
+		tasks:['tasks'] //TODO must no be hardcoded but passed from the model
       }
       // Storing in a variable for clarity on what sendRequest returns
       var promise = sendRequest(request, snippetCallback); 
